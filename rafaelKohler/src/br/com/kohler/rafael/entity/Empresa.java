@@ -1,6 +1,9 @@
 package br.com.kohler.rafael.entity;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+
+import javax.swing.text.MaskFormatter;
 
 /**
  * Classe que representa uma empresa
@@ -15,8 +18,6 @@ public class Empresa {
 	
 	private ArrayList<NotaFiscal> notasFiscais;
 	
-	private final static Boolean nota = false;
-
 	public Empresa(String nome, String cnpj) {
 		this.nome = nome;
 		this.cnpj = cnpj;
@@ -29,6 +30,12 @@ public class Empresa {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+	public String getMaskCnpjStr(String cnpj) throws ParseException {
+		MaskFormatter mf = new MaskFormatter("##.###.###/####-##");
+		mf.setValueContainsLiteralCharacters(false);
+		return mf.valueToString(cnpj);
 	}
 
 	public String getCnpj() {
@@ -61,6 +68,10 @@ public class Empresa {
 	
 	@Override
 		public String toString() {
-			return "Empresa: " + nome + "\nCNPJ: " + cnpj + "\n";
+			try {
+				return "Empresa: " + nome.toUpperCase() + "\nCNPJ: " + getMaskCnpjStr(cnpj) + "\n";
+			} catch (ParseException e) {
+				return e.getMessage();
+			}
 		}
 }
