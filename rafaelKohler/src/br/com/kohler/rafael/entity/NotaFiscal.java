@@ -1,4 +1,4 @@
-package entity;
+package br.com.kohler.rafael.entity;
 
 import java.util.Date;
 
@@ -76,6 +76,7 @@ public class NotaFiscal implements Comparable<NotaFiscal> {
 	}
 
 	public void setValorComImposto(Double valorComImposto) {
+		valorComImposto = imposto.calcularImpostoTotal();
 		this.valorComImposto = valorComImposto;
 	}
 

@@ -1,4 +1,4 @@
-package entity;
+package br.com.kohler.rafael.entity;
 
 /** 
  * Classe que representa Impostos
@@ -8,7 +8,7 @@ package entity;
 public abstract class Imposto {
 	
 	/**
-	 * O valor da Aliquota Federal é de 15% do valor da nota.
+	 * O valor da Aliquota Federal ï¿½ de 15% do valor da nota.
 	 */
 	private static Double aliquotaFederal = 0.15;
 	
@@ -19,7 +19,7 @@ public abstract class Imposto {
 	}
 	
 	public Double calcularImpostoTotal() {
-		return this.aliquotaFederal;
+		return this.aliquotaFederal + calcularImpostoEstadual();
 	}
 	
 	public Double calcularImpostoFederal() {

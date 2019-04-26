@@ -1,4 +1,4 @@
-package entity;
+package br.com.kohler.rafael.entity;
 
 /**
  * Classe que representa o imposto do Estado de Santa Catarina

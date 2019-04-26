@@ -1,4 +1,4 @@
-package entity;
+package br.com.kohler.rafael.entity;
 
 import java.util.ArrayList;
 
@@ -14,6 +14,8 @@ public class Empresa {
 	private String cnpj;
 	
 	private ArrayList<NotaFiscal> notasFiscais;
+	
+	private final static Boolean nota = false;
 
 	public Empresa(String nome, String cnpj) {
 		this.nome = nome;
@@ -37,13 +39,28 @@ public class Empresa {
 		this.cnpj = cnpj;
 	}
 	
+	public void addNota(NotaFiscal nota) {
+		notasFiscais.add(nota);
+	}
+	
 	public ArrayList<NotaFiscal> getNotasFiscaisValidas(){
-		return null;
+		ArrayList<NotaFiscal> notasValidas = new ArrayList<>();
+		
+		for (int i = 0; i < notasFiscais.size(); i++) {
+			if (notasValidas.get(i) == this.notasFiscais.get(i)) {
+				notasFiscais.add(notasValidas.get(i));
+			}
+		}
+		return notasFiscais;
 	}
 	
 	public ArrayList<NotaFiscal> getNotasFiscaisCanceladas(){
-		return null;
+		ArrayList<NotaFiscal> notasCanceladas = new ArrayList<>();
+		return notasCanceladas;
 	}
 	
-	
+	@Override
+		public String toString() {
+			return "Empresa: " + nome + "\nCNPJ: " + cnpj + "\n";
+		}
 }

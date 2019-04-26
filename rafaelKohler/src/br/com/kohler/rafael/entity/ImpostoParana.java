@@ -1,4 +1,4 @@
-package entity;
+package br.com.kohler.rafael.entity;
 
 /**
  * Classe que representa o Imposto do estado do Parana
