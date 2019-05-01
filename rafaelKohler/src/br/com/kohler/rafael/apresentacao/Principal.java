@@ -66,9 +66,9 @@ public class Principal {
 
 				
 			case 4:
+				System.out.println("####    RELATÓRIO DE TODAS AS EMPRESAS    ####");
 				for (Empresa empresa : empresas) {
 					Collections.sort(empresa.getNotasFiscais());
-					System.out.println("####    RELATÓRIO DE TODAS AS EMPRESAS    ####");
 					System.out.println(empresa.toString());
 				}
 				break;
@@ -105,6 +105,7 @@ public class Principal {
 				try {
 					System.out.println("####    RELATÓRIO DE NOTAS FISCAIS CANCELADAS    ####\n");
 					Empresa empNotasCanceladas = pesquisarEmpresa();
+					Collections.sort(empNotasCanceladas.getNotasFiscaisCanceladas());
 					System.out.println(empNotasCanceladas.getNotasFiscaisCanceladas().toString());
 					System.out.println();
 				} catch (Exception e) {
