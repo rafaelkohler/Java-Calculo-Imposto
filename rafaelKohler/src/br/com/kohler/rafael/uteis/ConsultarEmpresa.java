@@ -10,7 +10,6 @@ public class ConsultarEmpresa {
 		for (int i = 0; i < empresas.size(); i++) {
 			if (empresas.get(i).getCnpj().equals(cnpj)) {
 				return empresas.get(i);
-				
 			}
 		}
 		throw new Exception("Esta empresa não existe.\n");

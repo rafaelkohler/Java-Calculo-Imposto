@@ -12,7 +12,7 @@ public class CriarEmpresa {
 		String cnpj = Console.recuperaTexto("Favor informar o seu CNPJ");
 
 		if(cnpj.isEmpty() || cnpj == null || cnpj.length() == 0 || cnpj.length() > 14 || cnpj.length() > 0 && cnpj.length() < 14 ) {
-			throw new Exception("CNPJ incorreto. Favor digitar novamente o CNPJ.\n");
+			throw new Exception("Valor do CNPJ incorreto, deve conter 14 números. Favor digitar novamente.\n");
 		}
 		
 		for (int i = 0; i < empresas.size(); i++) {

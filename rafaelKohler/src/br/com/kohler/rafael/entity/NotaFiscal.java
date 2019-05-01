@@ -11,17 +11,17 @@ import java.util.Date;
 public class NotaFiscal implements Comparable<NotaFiscal> {
 
 	private String numero;
-	
+
 	private String descricao;
-	
+
 	private Date dataEmissao;
-	
+
 	private Imposto imposto;
-	
+
 	private Double valor;
-	
+
 	private Double valorComImposto;
-	
+
 	private boolean cancelada;
 
 	public NotaFiscal(String numero, String descricao, Imposto imposto, Double valor) {
@@ -29,6 +29,9 @@ public class NotaFiscal implements Comparable<NotaFiscal> {
 		this.descricao = descricao;
 		this.imposto = imposto;
 		this.valor = valor;
+		this.dataEmissao = new Date();
+		this.valorComImposto = this.valor + imposto.calcularImpostoTotal();
+		this.cancelada = false;
 	}
 
 	public String getNumero() {
@@ -56,7 +59,7 @@ public class NotaFiscal implements Comparable<NotaFiscal> {
 	}
 
 	public Imposto getImposto() {
-		return imposto;
+		return this.imposto;
 	}
 
 	public void setImposto(Imposto imposto) {
@@ -76,7 +79,6 @@ public class NotaFiscal implements Comparable<NotaFiscal> {
 	}
 
 	public void setValorComImposto(Double valorComImposto) {
-		valorComImposto = imposto.calcularImpostoTotal();
 		this.valorComImposto = valorComImposto;
 	}
 
@@ -89,13 +91,16 @@ public class NotaFiscal implements Comparable<NotaFiscal> {
 	}
 
 	@Override
-		public String toString() {
-			return super.toString();
-		}
+	public String toString() {
+		return "\nNota Fiscal Número: " + this.numero + "\nDescrição da Nota: " + this.descricao
+				+ "\nData de emissão da nota: " + this.dataEmissao + "\nValor da nota: R$ " + this.valor
+				+ "\nValor do imposto a ser pago: R$ " + this.imposto + "\nValor total da Nota: R$ "
+				+ this.valorComImposto + "\nEsta nota está cancelada? " + isCancelada() + "\n\n";
+	}
 
 	@Override
 	public int compareTo(NotaFiscal notaFiscal) {
-		return 0;
+		return this.valor.compareTo(notaFiscal.getValor());
 	}
 
 }
