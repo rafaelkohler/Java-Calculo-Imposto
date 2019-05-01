@@ -18,9 +18,8 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		String[] opcoes = { "Cadastrar empresa", "Pesquisar empresas", "Excluir empresa", "Listar todas as empresas",
-				"Emitir nota fiscal", "Listar notas fiscais por empresa",
-				"Cancelar nota fiscal" };
+		String[] opcoes = { "Cadastrar empresa", "Pesquisar empresas", "Excluir empresa", "Relatório de todas as empresas",
+				"Emissão de nota fiscal", "Relatório de notas fiscais por empresa", "Relatório de notas fiscais cancelas", "Cancelar nota fiscal" };
 		boolean continua = true;
 
 		do {
@@ -29,6 +28,7 @@ public class Principal {
 			switch (opcao) {
 			case 1:
 				try {
+					System.out.println("####    CADASTRAR UMA NOVA EMPRESA    ####\n");
 					Empresa nova = CriarEmpresa.criarEmpresa(empresas);
 					empresas.add(nova);
 					System.out.println("Empresa cadastrada!\n");
@@ -41,6 +41,7 @@ public class Principal {
 				
 			case 2:
 				try {
+					System.out.println("####    PESQUISAR EMPRESA    ####");
 					Empresa pesquisada = pesquisarEmpresa();
 					System.out.println(pesquisada.toString());
 				} catch (Exception e1) {
@@ -51,11 +52,13 @@ public class Principal {
 				
 			case 3:
 				try {
+					System.out.println("####    EXCLUSÃO DE EMPRESA    ####");
 					String cnpjExclusao = Console.recuperaTexto("Informe o CNPJ da empresa que deseja excluir");
 					Empresa excluida = ExcluirEmpresa.excluirEmpresa(empresas, cnpjExclusao);
 					if (excluida != null) {
-						System.out.println("Empresa\n" + excluida.toString() + "\nFOI EXCLUIDA.");
+						System.out.println("Empresa\n" + excluida.toString() + "FOI EXCLUIDA.\n\n");
 					}
+
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
 				}
@@ -64,6 +67,8 @@ public class Principal {
 				
 			case 4:
 				for (Empresa empresa : empresas) {
+					Collections.sort(empresa.getNotasFiscais());
+					System.out.println("####    RELATÓRIO DE TODAS AS EMPRESAS    ####");
 					System.out.println(empresa.toString());
 				}
 				break;
@@ -71,11 +76,12 @@ public class Principal {
 				
 			case 5:
 				try {
+					System.out.println("####    EMISSÃO DE NOTA FISCAL    ####");
 					Empresa novaEmpresa = pesquisarEmpresa();
 					NotaFiscal nf = EmissaoNotas.criarNotaFiscal();
 					notasFiscais.add(nf);
 					novaEmpresa.addNota(nf);
-					empresas.add(novaEmpresa);
+					novaEmpresa.getNotasFiscaisValidas();
 					System.out.println(novaEmpresa.toString());
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -85,6 +91,7 @@ public class Principal {
 				
 			case 6:
 				try {
+					System.out.println("####    RELATÓRIO DE NOTAS FISCAIS POR EMPRESA    ####\n");
 					Empresa novaEmpresa = pesquisarEmpresa();
 					Collections.sort(novaEmpresa.getNotasFiscais());
 					System.out.println(novaEmpresa.toString());
@@ -96,7 +103,24 @@ public class Principal {
 				
 			case 7:
 				try {
+					System.out.println("####    RELATÓRIO DE NOTAS FISCAIS CANCELADAS    ####\n");
+					Empresa empNotasCanceladas = pesquisarEmpresa();
+					System.out.println(empNotasCanceladas.getNotasFiscaisCanceladas().toString());
+					System.out.println();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+				
+				
+			case 8:
+				try {
+					System.out.println("####    CANCELAMENTO DE NOTA FISCAL    ####\n");
 					Empresa cancelarNota = pesquisarEmpresa();
+					System.out.println("Qual nota você gostaria de cancelar?");
+					System.out.println(cancelarNota.getNotasFiscais().toString());
+					NotaFiscal cancelar = pesquisarNotaFiscal();
+					cancelar.setCancelada(true);
 					cancelarNota.getNotasFiscaisCanceladas();
 					System.out.println(cancelarNota.toString());
 				} catch (Exception e) {
@@ -160,7 +184,7 @@ public class Principal {
 
 	public static NotaFiscal pesquisarNotaFiscal() throws Exception {
 		System.out.println();
-		String numero = Console.recuperaTexto("Informe o número da nota a ser pesquisada");
+		String numero = Console.recuperaTexto("Informe o número da nota: ");
 		Exception e = null;
 		NotaFiscal existente = null;
 

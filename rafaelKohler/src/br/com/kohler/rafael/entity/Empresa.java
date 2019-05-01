@@ -58,7 +58,7 @@ public class Empresa {
 
 	public ArrayList<NotaFiscal> getNotasFiscaisValidas() {
 		ArrayList<NotaFiscal> notasValidas = new ArrayList<>();
-		for (NotaFiscal notaFiscal : notasValidas) {
+		for (NotaFiscal notaFiscal : notasFiscais) {
 			notasValidas.add(notaFiscal);
 		}
 		return notasValidas;
@@ -66,7 +66,7 @@ public class Empresa {
 
 	public ArrayList<NotaFiscal> getNotasFiscaisCanceladas() {
 		ArrayList<NotaFiscal> notasCanceladas = new ArrayList<>();
-		for (NotaFiscal notaFiscal : notasCanceladas) {
+		for (NotaFiscal notaFiscal : notasFiscais) {
 			if (notaFiscal.isCancelada()) {
 				notasCanceladas.add(notaFiscal);
 			}
@@ -78,10 +78,10 @@ public class Empresa {
 	@Override
 	public String toString() {
 		try {
-			return "\n\n" + "------------------------------------------------------------------------------------------"
+			return "\n" + "------------------------------------------------------------------------------------------"
 					+ "\nEmpresa: " + nome.toUpperCase() + "\nCNPJ: " + getMaskCnpjStr(cnpj) + "\n\nNotas fiscais: "
 					+ this.notasFiscais + "\n"
-					+ "------------------------------------------------------------------------------------------" + "\n\n";
+					+ "------------------------------------------------------------------------------------------" + "\n";
 		} catch (ParseException e) {
 			return e.getMessage();
 		}
