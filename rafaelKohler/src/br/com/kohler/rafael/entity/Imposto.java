@@ -18,14 +18,26 @@ public abstract class Imposto {
 		this.valor = valor;
 	}
 	
+	/**
+	 * Calcula apenas o valor do imposto.
+	 * @return
+	 */
 	public Double calcularImpostoTotal() {
 		return calcularImpostoFederal() + calcularImpostoEstadual();
 	}
 	
+	/**
+	 * Calcula o valor do Imposto federal.
+	 * @return
+	 */
 	public Double calcularImpostoFederal() {
 		return this.valor * aliquotaFederal;
 	}
 	
+	/**
+	 * Método Abstrato para ser implementado nas classes filhas.
+	 * @return
+	 */
 	public abstract Double calcularImpostoEstadual();
 	
 	@Override

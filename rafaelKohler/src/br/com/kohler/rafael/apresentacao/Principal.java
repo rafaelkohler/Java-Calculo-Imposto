@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import br.com.kohler.rafael.entity.Empresa;
+import br.com.kohler.rafael.entity.Faturamento;
 import br.com.kohler.rafael.entity.NotaFiscal;
 import br.com.kohler.rafael.uteis.ConsultaNotaFiscal;
 import br.com.kohler.rafael.uteis.ConsultarEmpresa;
@@ -11,6 +12,12 @@ import br.com.kohler.rafael.uteis.CriarEmpresa;
 import br.com.kohler.rafael.uteis.EmissaoNotas;
 import br.com.kohler.rafael.uteis.ExcluirEmpresa;
 
+/**
+ * Classe principal do programa.
+ * 
+ * @author Rafael Kohler
+ *
+ */
 public class Principal {
 
 	static ArrayList<Empresa> empresas = new ArrayList<>();
@@ -18,8 +25,9 @@ public class Principal {
 
 	public static void main(String[] args) {
 
-		String[] opcoes = { "Cadastrar empresa", "Pesquisar empresas", "Excluir empresa", "Relatório de todas as empresas",
-				"Emissão de nota fiscal", "Relatório de notas fiscais por empresa", "Relatório de notas fiscais cancelas", "Cancelar nota fiscal" };
+		String[] opcoes = { "Cadastrar empresa", "Pesquisar empresas", "Excluir empresa",
+				"Relatório de todas as empresas", "Emissão de nota fiscal", "Relatório de notas fiscais por empresa",
+				"Relatório de notas fiscais cancelas", "Cancelar nota fiscal", "Total faturado por empresa" };
 		boolean continua = true;
 
 		do {
@@ -38,7 +46,6 @@ public class Principal {
 
 				break;
 
-				
 			case 2:
 				try {
 					System.out.println("####    PESQUISAR EMPRESA    ####");
@@ -49,7 +56,6 @@ public class Principal {
 				}
 				break;
 
-				
 			case 3:
 				try {
 					System.out.println("####    EXCLUSÃO DE EMPRESA    ####");
@@ -64,7 +70,6 @@ public class Principal {
 				}
 				break;
 
-				
 			case 4:
 				System.out.println("####    RELATÓRIO DE TODAS AS EMPRESAS    ####");
 				for (Empresa empresa : empresas) {
@@ -73,7 +78,6 @@ public class Principal {
 				}
 				break;
 
-				
 			case 5:
 				try {
 					System.out.println("####    EMISSÃO DE NOTA FISCAL    ####");
@@ -88,7 +92,6 @@ public class Principal {
 				}
 				break;
 
-				
 			case 6:
 				try {
 					System.out.println("####    RELATÓRIO DE NOTAS FISCAIS POR EMPRESA    ####\n");
@@ -100,7 +103,6 @@ public class Principal {
 				}
 				break;
 
-				
 			case 7:
 				try {
 					System.out.println("####    RELATÓRIO DE NOTAS FISCAIS CANCELADAS    ####\n");
@@ -112,8 +114,7 @@ public class Principal {
 					System.out.println(e.getMessage());
 				}
 				break;
-				
-				
+
 			case 8:
 				try {
 					System.out.println("####    CANCELAMENTO DE NOTA FISCAL    ####\n");
@@ -121,11 +122,35 @@ public class Principal {
 					System.out.println("Qual nota você gostaria de cancelar?");
 					System.out.println(cancelarNota.getNotasFiscais().toString());
 					NotaFiscal cancelar = pesquisarNotaFiscal();
-					cancelar.setCancelada(true);
-					cancelarNota.getNotasFiscaisCanceladas();
-					System.out.println(cancelarNota.toString());
+
+					try {
+						if (cancelar.getValor() <= 10000) {
+							cancelar.setCancelada(true);
+							System.out.println("Nota: " + cancelar.toString() + "CANCELADA.");
+							cancelarNota.getNotasFiscaisCanceladas();
+							System.out.println("Total de notas fiscais: " + cancelarNota.toString());
+						} else {
+
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
+				}
+				break;
+
+			case 9:
+				try {
+					System.out.println("####    FATURAMENTO TOTAL DA EMPRESA    ####\n");
+					Empresa faturamentoEmpresa = pesquisarEmpresa();
+					Double faturamento = Faturamento.contabilizarValoresNotas(faturamentoEmpresa.getNotasFiscais());
+					System.out.println(faturamentoEmpresa.toString());
+					System.out.println("\nEste é o faturamento total da empresa: R$ " + faturamento + "\n\n");
+
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					;
 				}
 				break;
 
@@ -137,6 +162,12 @@ public class Principal {
 
 	}
 
+	/**
+	 * Método para pesquisar uma empresa.
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public static Empresa pesquisarEmpresa() throws Exception {
 		System.out.println();
 		String cnpj = Console.recuperaTexto("Informe o CNPJ da empresa a ser pesquisada");
@@ -183,6 +214,12 @@ public class Principal {
 		throw e;
 	}
 
+	/**
+	 * Método para pesquisar uma nota Fiscal
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
 	public static NotaFiscal pesquisarNotaFiscal() throws Exception {
 		System.out.println();
 		String numero = Console.recuperaTexto("Informe o número da nota: ");
@@ -194,6 +231,10 @@ public class Principal {
 		} catch (Exception arg) {
 			System.out.println(arg.getMessage());
 			e = arg;
+		}
+
+		if (existente.getValor() > 10000) {
+			throw new Exception("Não é possível excluir esta nota, ela possui Valor maior que R$ 10.000,00\n\n");
 		}
 
 		if (existente != null) {

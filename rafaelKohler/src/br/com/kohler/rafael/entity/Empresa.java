@@ -33,6 +33,12 @@ public class Empresa {
 		this.nome = nome;
 	}
 
+	/**
+	 * Máscaras para apresentar o valor de CNPJ na tela formatado.
+	 * @param cnpj
+	 * @return Retorna a String do valor de CNPJ formatado.
+	 * @throws ParseException
+	 */
 	public String getMaskCnpjStr(String cnpj) throws ParseException {
 		MaskFormatter mf = new MaskFormatter("##.###.###/####-##");
 		mf.setValueContainsLiteralCharacters(false);
@@ -51,11 +57,16 @@ public class Empresa {
 		notasFiscais.add(nota);
 	}
 	
+	/**
+	 * Método para armazenar todas as notas fiscais.
+	 */
 	public ArrayList<NotaFiscal> getNotasFiscais() {
 		return notasFiscais;
 	}
 
-
+	/**
+	 * Método para armazenar as notas fiscais válidas.
+	 */
 	public ArrayList<NotaFiscal> getNotasFiscaisValidas() {
 		ArrayList<NotaFiscal> notasValidas = new ArrayList<>();
 		for (NotaFiscal notaFiscal : notasFiscais) {
@@ -64,6 +75,9 @@ public class Empresa {
 		return notasValidas;
 	}
 
+	/**
+	 * Método para armazenar as notas fiscais canceladas.
+	 */
 	public ArrayList<NotaFiscal> getNotasFiscaisCanceladas() {
 		ArrayList<NotaFiscal> notasCanceladas = new ArrayList<>();
 		for (NotaFiscal notaFiscal : notasFiscais) {

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import br.com.kohler.rafael.entity.Empresa;
 
+/**
+ * Classe responsável por consultar uma empresa.
+ * @author Rafael Kohler
+ *
+ */
 public class ConsultarEmpresa {
 
 	public static Empresa consultarEmpresas(ArrayList<Empresa> empresas, String cnpj) throws Exception {

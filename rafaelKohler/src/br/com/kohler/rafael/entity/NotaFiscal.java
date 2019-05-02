@@ -82,10 +82,18 @@ public class NotaFiscal implements Comparable<NotaFiscal> {
 		this.valorComImposto = valorComImposto;
 	}
 
+	/**
+	 * Método para demonstrar que uma nota está cancelada.
+	 * @return
+	 */
 	public boolean isCancelada() {
 		return cancelada;
 	}
 
+	/**
+	 * Método para cancelar uma nota fiscal.
+	 * @param cancelada
+	 */
 	public void setCancelada(boolean cancelada) {
 		this.cancelada = cancelada;
 	}

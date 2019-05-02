@@ -1,10 +1,16 @@
 package br.com.kohler.rafael.enumerator;
 
+/**
+ * Enum para representar todos os Estados que precisam calcular um imposto.
+ * @author Rafael Kohler
+ *
+ */
 public enum Estados {
 
 	SC("Santa Catarina", 1), 
 	PR("Paraná", 2), 
-	SP("São Paulo", 3);
+	SP("São Paulo", 3),
+	AP("Amapá", 4);
 
 	private String estado;
 	private int key;
@@ -22,6 +28,10 @@ public enum Estados {
 		return this.key;
 	}
 
+	/**
+	 * Método para selecionar um estado.
+	 * @return Um estado.
+	 */
 	public static String[] getEstados() {
 		String[] estados = new String[Estados.values().length];
 		for (int i = 0; i < Estados.values().length; i++) {

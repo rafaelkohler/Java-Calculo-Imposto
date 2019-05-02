@@ -11,6 +11,9 @@ public class ImpostoSantaCatarina extends Imposto {
 		super(valor);
 	}
 	
+	/**
+	 * Calcula o imposto do estado de Santa Catarina
+	 */
 	@Override
 	public Double calcularImpostoEstadual() {
 		return super.valor * 0.10;

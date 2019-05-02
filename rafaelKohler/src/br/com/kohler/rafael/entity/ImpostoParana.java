@@ -11,6 +11,9 @@ public class ImpostoParana extends Imposto {
 		super(valor);
 	}
 	
+	/**
+	 * Calcula o imposto do estado o Parana
+	 */
 	@Override
 	public Double calcularImpostoEstadual() {
 		return super.valor * 0.05;
