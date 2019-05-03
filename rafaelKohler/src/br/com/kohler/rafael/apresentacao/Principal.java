@@ -27,7 +27,7 @@ public class Principal {
 
 		String[] opcoes = { "Cadastrar empresa", "Pesquisar empresas", "Excluir empresa",
 				"Relatório de todas as empresas", "Emissão de nota fiscal", "Relatório de notas fiscais por empresa",
-				"Relatório de notas fiscais cancelas", "Cancelar nota fiscal", "Total faturado por empresa",
+				"Relatório de notas fiscais cancelas", "Relatório de notas fiscais válidas", "Cancelar nota fiscal", "Total faturado por empresa",
 				"Cancelar um lote de notas fiscais" };
 		boolean continua = true;
 
@@ -115,8 +115,21 @@ public class Principal {
 					System.out.println(e.getMessage());
 				}
 				break;
-
+				
 			case 8:
+				try {
+					System.out.println("####    RELATÓRIO DE NOTAS FISCAIS VÁLIDAS    ####\n");
+					Empresa empNotasValidas = pesquisarEmpresa();
+					Collections.sort(empNotasValidas.getNotasFiscaisValidas());
+					System.out.println("Estas são as notas válidas\n");
+					System.out.println(empNotasValidas.getNotasFiscaisValidas().toString());
+					System.out.println();
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+
+			case 9:
 				try {
 					System.out.println("####    CANCELAMENTO DE NOTA FISCAL    ####\n");
 					Empresa cancelarNota = pesquisarEmpresa();
@@ -127,7 +140,7 @@ public class Principal {
 					try {
 						if (cancelar.getValor() <= 10000) {
 							cancelar.setCancelada(true);
-							System.out.println("Nota: " + cancelar.toString() + "CANCELADA.");
+							System.out.println("Nota: " + cancelar.toString() + "CANCELADA.\n\n");
 							cancelarNota.getNotasFiscaisCanceladas();
 							System.out.println("Total de notas fiscais: " + cancelarNota.toString());
 						} else {
@@ -141,11 +154,12 @@ public class Principal {
 				}
 				break;
 
-			case 9:
+			case 10:
 				try {
 					System.out.println("####    FATURAMENTO TOTAL DA EMPRESA    ####\n");
 					Empresa faturamentoEmpresa = pesquisarEmpresa();
 					Double faturamento = Faturamento.contabilizarValoresNotas(faturamentoEmpresa.getNotasFiscais());
+					System.out.println("Estas são todas as notas da empresa.\n");
 					System.out.println(faturamentoEmpresa.toString());
 					System.out.println("\nEste é o faturamento total da empresa: R$ " + faturamento + "\n\n");
 
@@ -154,7 +168,7 @@ public class Principal {
 				}
 				break;
 
-			case 10:
+			case 11:
 				try {
 					System.out.println("####    CANCELAR LOTE DE NOTAS    ####\n");
 					Empresa emp = pesquisarEmpresa();
@@ -260,6 +274,12 @@ public class Principal {
 		throw e;
 	}
 
+	/**
+	 * Método responsável por cancelar um lote específico de notas Fiscais.
+	 * @param notas
+	 * @param valor
+	 * @return
+	 */
 	public static ArrayList<NotaFiscal> cancelarLoteNotas(ArrayList<NotaFiscal> notas, Double valor) {
 		ArrayList<NotaFiscal> auxiliar = new ArrayList<NotaFiscal>();
 		for (int i = 0; i < notas.size(); i++) {

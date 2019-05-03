@@ -70,6 +70,7 @@ public class Empresa {
 	public ArrayList<NotaFiscal> getNotasFiscaisValidas() {
 		ArrayList<NotaFiscal> notasValidas = new ArrayList<>();
 		for (NotaFiscal notaFiscal : notasFiscais) {
+			if(notaFiscal.isCancelada() != true)
 			notasValidas.add(notaFiscal);
 		}
 		return notasValidas;
