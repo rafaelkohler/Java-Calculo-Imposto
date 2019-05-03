@@ -20,6 +20,7 @@ public class CriarEmpresa {
 	 */
 	public static Empresa criarEmpresa(ArrayList<Empresa> empresas) throws Exception {
 		String nome = Console.recuperaTexto("Favor informar o nome da Empresa");
+		System.out.println("\nO CNPJ deve conter 14 dígitos.");
 		String cnpj = Console.recuperaTexto("Favor informar o seu CNPJ");
 
 		if(cnpj.isEmpty() || cnpj == null || cnpj.length() == 0 || cnpj.length() > 14 || cnpj.length() > 0 && cnpj.length() < 14 ) {

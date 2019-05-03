@@ -60,7 +60,8 @@ public class Principal {
 			case 3:
 				try {
 					System.out.println("####    EXCLUSÃO DE EMPRESA    ####");
-					String cnpjExclusao = Console.recuperaTexto("Informe o CNPJ da empresa que deseja excluir");
+					System.out.println("O CNPJ da empresa ser excluida deve conter 14 dígitos.");
+					String cnpjExclusao = Console.recuperaTexto("Informe o CNPJ da empresa");
 					Empresa excluida = ExcluirEmpresa.excluirEmpresa(empresas, cnpjExclusao);
 					if (excluida != null) {
 						System.out.println("Empresa\n" + excluida.toString() + "FOI EXCLUIDA.\n\n");
@@ -173,12 +174,17 @@ public class Principal {
 					System.out.println("####    CANCELAR LOTE DE NOTAS    ####\n");
 					Empresa emp = pesquisarEmpresa();
 					System.out.println("Os valores abaixo do informado, serão canceladas.");
+					System.out.println("Não é possível cancelar notas maiores que R$ 10.000,00");
 					Double valor = Console.recuperaDecimal("Informe o valor: ");
 
-					ArrayList<NotaFiscal> notas = cancelarLoteNotas(emp.getNotasFiscais(), valor);
-					System.out.println("As notas com valor abaixo de R$ " + valor + " foram cancelas.\n\n");
-					System.out.println("Estas foram as notas canceladas.\n");
-					System.out.println(emp.getNotasFiscaisCanceladas().toString());
+					if(valor <= 10000) {
+						ArrayList<NotaFiscal> notas = cancelarLoteNotas(emp.getNotasFiscais(), valor);
+						System.out.println("As notas com valor abaixo de R$ " + valor + " foram cancelas.\n\n");
+						System.out.println("Estas foram as notas canceladas.\n");
+						System.out.println(emp.getNotasFiscaisCanceladas().toString());
+					} else {
+						System.out.println("Valor inválido, favor digitar novamente");
+					}
 
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
@@ -201,7 +207,8 @@ public class Principal {
 	 */
 	public static Empresa pesquisarEmpresa() throws Exception {
 		System.out.println();
-		String cnpj = Console.recuperaTexto("Informe o CNPJ da empresa a ser pesquisada");
+		System.out.println("O CNPJ a ser pesquisado deve conter 14 dígitos.");
+		String cnpj = Console.recuperaTexto("Informe o CNPJ da empresa");
 		Exception e = null;
 		Empresa existente = null;
 		try {
@@ -281,10 +288,11 @@ public class Principal {
 	 * @return
 	 */
 	public static ArrayList<NotaFiscal> cancelarLoteNotas(ArrayList<NotaFiscal> notas, Double valor) {
-		ArrayList<NotaFiscal> auxiliar = new ArrayList<NotaFiscal>();
 		for (int i = 0; i < notas.size(); i++) {
 			if (notas.get(i).getValor() < valor) {
-				notas.get(i).setCancelada(true);
+				if(notas.get(i).getValor() <= 10000 ) {
+					notas.get(i).setCancelada(true);
+				} 
 			}
 		}
 		return notas;
