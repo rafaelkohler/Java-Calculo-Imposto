@@ -27,7 +27,8 @@ public class Principal {
 
 		String[] opcoes = { "Cadastrar empresa", "Pesquisar empresas", "Excluir empresa",
 				"Relatório de todas as empresas", "Emissão de nota fiscal", "Relatório de notas fiscais por empresa",
-				"Relatório de notas fiscais cancelas", "Cancelar nota fiscal", "Total faturado por empresa" };
+				"Relatório de notas fiscais cancelas", "Cancelar nota fiscal", "Total faturado por empresa",
+				"Cancelar um lote de notas fiscais" };
 		boolean continua = true;
 
 		do {
@@ -150,7 +151,23 @@ public class Principal {
 
 				} catch (Exception e) {
 					System.out.println(e.getMessage());
-					;
+				}
+				break;
+
+			case 10:
+				try {
+					System.out.println("####    CANCELAR LOTE DE NOTAS    ####\n");
+					Empresa emp = pesquisarEmpresa();
+					System.out.println("Os valores abaixo do informado, serão canceladas.");
+					Double valor = Console.recuperaDecimal("Informe o valor: ");
+
+					ArrayList<NotaFiscal> notas = cancelarLoteNotas(emp.getNotasFiscais(), valor);
+					System.out.println("As notas com valor abaixo de R$ " + valor + " foram cancelas.\n\n");
+					System.out.println("Estas foram as notas canceladas.\n");
+					System.out.println(emp.getNotasFiscaisCanceladas().toString());
+
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
 				}
 				break;
 
@@ -241,5 +258,15 @@ public class Principal {
 			return existente;
 		}
 		throw e;
+	}
+
+	public static ArrayList<NotaFiscal> cancelarLoteNotas(ArrayList<NotaFiscal> notas, Double valor) {
+		ArrayList<NotaFiscal> auxiliar = new ArrayList<NotaFiscal>();
+		for (int i = 0; i < notas.size(); i++) {
+			if (notas.get(i).getValor() < valor) {
+				notas.get(i).setCancelada(true);
+			}
+		}
+		return notas;
 	}
 }
